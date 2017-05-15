@@ -130,9 +130,9 @@ class ViewController: UIViewController, MKMapViewDelegate {
             We setup a pair of anchors that will define how the floorplan image
             maps to geographic co-ordinates.
         */
-        let anchor1 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(37.770419,-122.465726), pdfPoint: CGPoint(x: 26.2, y: 86.4))
+        let anchor1 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.771319,-86.071423), pdfPoint: CGPoint(x: 367, y: 469))
 
-        let anchor2 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(37.769288,-122.466376), pdfPoint: CGPoint(x: 570.1, y: 317.7))
+        let anchor2 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.771192,-86.071312), pdfPoint: CGPoint(x: 323, y: 441))
 
         let anchorPair = GeoAnchorPair(fromAnchor: anchor1, toAnchor: anchor2)
 
@@ -142,7 +142,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
             Note that these coordinates are given in PDF coordinates, but they
             will show up on just fine on MapKit in MapKit coordinates.
         */
-        let pdfTriangleRegionToHighlight = [CGPoint(x: 205.0, y: 335.3), CGPoint(x: 205.0, y: 367.3), CGPoint(x: 138.5, y: 367.3)]
+        let pdfTriangleRegionToHighlight = [CGPoint(x: 300, y: 691), CGPoint(x: 260, y: 709), CGPoint(x: 260, y: 671)]
 
         // === Initialize our assets
 
@@ -151,7 +151,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
             reference during "Copy Bundle Resources" section under target
             settings build phases.
         */
-        let pdfUrl = Bundle.main.url(forResource: "floorplan_overlay_floor0", withExtension: "pdf", subdirectory:"Floorplans")!
+        let pdfUrl = Bundle.main.url(forResource: "HTC_Conference_Room_Locations-not-flipped", withExtension: "pdf", subdirectory:"Floorplans")!
 
         floorplan0 = FloorplanOverlay(floorplanUrl: pdfUrl, withPDFBox: CGPDFBox.trimBox, andAnchors: anchorPair, forFloorLevel: 0)
 
@@ -190,6 +190,80 @@ class ViewController: UIViewController, MKMapViewDelegate {
             automatically bounce back. If you would like to disable this
             behavior, comment out the following line.
         */
+        snapMapViewToFloorplan = true
+    }
+
+    /* override*/ func OrigViewDidLoad() {
+        super.viewDidLoad()
+        
+        locationManager = CLLocationManager()
+        
+        // === Configure our floorplan.
+        
+        /*
+         We setup a pair of anchors that will define how the floorplan image
+         maps to geographic co-ordinates.
+         */
+        let anchor1 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(37.770419,-122.465726), pdfPoint: CGPoint(x: 26.2, y: 86.4))
+        
+        let anchor2 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(37.769288,-122.466376), pdfPoint: CGPoint(x: 570.1, y: 317.7))
+        
+        let anchorPair = GeoAnchorPair(fromAnchor: anchor1, toAnchor: anchor2)
+        
+        /*
+         Pick a triangle on your PDF that you would like to highlight in
+         yellow. Feel free to try regions with more than three edges.
+         Note that these coordinates are given in PDF coordinates, but they
+         will show up on just fine on MapKit in MapKit coordinates.
+         */
+        let pdfTriangleRegionToHighlight = [CGPoint(x: 205.0, y: 335.3), CGPoint(x: 205.0, y: 367.3), CGPoint(x: 138.5, y: 367.3)]
+        
+        // === Initialize our assets
+        
+        /*
+         We have to specify subdirectory here since we copy our folder
+         reference during "Copy Bundle Resources" section under target
+         settings build phases.
+         */
+        let pdfUrl = Bundle.main.url(forResource: "floorplan_overlay_floor0_Reversed", withExtension: "pdf", subdirectory:"Floorplans")!
+        
+        floorplan0 = FloorplanOverlay(floorplanUrl: pdfUrl, withPDFBox: CGPDFBox.trimBox, andAnchors: anchorPair, forFloorLevel: 0)
+        
+        visibleMapRegionDelegate = VisibleMapRegionDelegate(floorplanBounds: floorplan0.boundingMapRectIncludingRotations, boundingPDFBox: floorplan0.floorplanPDFBox,
+                                                            floorplanCenter: floorplan0.coordinate,
+                                                            floorplanUprightMKMapCameraHeading: floorplan0.getFloorplanUprightMKMapCameraHeading())
+        
+        // === Initialize our view
+        hideBackgroundOverlayAlpha = 1.0
+        
+        // Disable tileset.
+        mapView.add(HideBackgroundOverlay.hideBackgroundOverlay(), level: .aboveRoads)
+        
+        /*
+         The following are provided for debugging.
+         In production, you'll want to comment this out.
+         */
+        debuggingOverlays = ViewController.createDebuggingOverlaysForMapView(mapView!, aboutFloorplan: floorplan0)
+        debuggingAnnotations = ViewController.createDebuggingAnnotationsForMapView(mapView!, aboutFloorplan: floorplan0)
+        
+        // Draw the floorplan!
+        mapView.add(floorplan0)
+        
+        /*
+         Highlight our region (originally specified in PDF coordinates) in
+         yellow!
+         */
+        let customHighlightRegion = floorplan0.polygonFromCustomPDFPath(pdfTriangleRegionToHighlight)
+        customHighlightRegion.title = "Hello World"
+        customHighlightRegion.subtitle = "This custom region will be highlighted in Yellow!"
+        mapView!.add(customHighlightRegion)
+        
+        /*
+         By default, we listen to the scroll & zoom events to make sure that
+         if the user scrolls/zooms too far away from the floorplan, we
+         automatically bounce back. If you would like to disable this
+         behavior, comment out the following line.
+         */
         snapMapViewToFloorplan = true
     }
 

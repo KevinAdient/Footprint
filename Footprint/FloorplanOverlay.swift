@@ -164,13 +164,17 @@ import MapKit
         */
         let rotatePDFXToMapKitX = coordinateConverter.getUprightMKMapCameraHeading()
 
+        print("rotatePDFXToMapKitX: [\(rotatePDFXToMapKitX)]\n")
         /*
             If a PDF Page Dictionary contains the "Rotate" entry, it is a
             request to the reader to rotate the _printed_ page *clockwise* by
             the given number of degrees before reading it.
         */
         let pdfPageDictionaryRotationEntryDegrees = pdfPage.rotationAngle
-
+        print("pdfPageDictionaryRotationEntryDegrees: [ \(pdfPageDictionaryRotationEntryDegrees)]\n")
+        
+        //print("overwriting the angle to be zero\n")
+        //pdfPageDictionaryRotationEntryDegrees = 0
         /*
             In the MapView world that is equivalent to subtracting that amount
             from the MKMapCamera heading.
@@ -226,6 +230,7 @@ import MapKit
         an MKPolygon overlay
     */
     var polygonFromBoundingMapRect: MKPolygon {
+        //print( boundingMapRect.polygonFromMapRect())
         return boundingMapRect.polygonFromMapRect()
     }
 
@@ -242,6 +247,7 @@ import MapKit
         PDF "point" distance.
     */
     var pdfPointSizeInMeters: CLLocationDistance {
+        print(coordinateConverter.unitSizeInMeters)
         return coordinateConverter.unitSizeInMeters
     }
 

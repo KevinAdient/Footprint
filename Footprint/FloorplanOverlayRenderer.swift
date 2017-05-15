@@ -15,7 +15,7 @@ import MapKit
     Should we show diagnostic visuals? Set this to false prior to compile to
     disable some of the diagnostic visuals
 */
-let SHOW_DIAGNOSTIC_VISUALS = false
+let SHOW_DIAGNOSTIC_VISUALS = true
 
 /**
     This class draws your FloorplanOverlay into an MKMapView.
