@@ -247,7 +247,7 @@ import MapKit
         PDF "point" distance.
     */
     var pdfPointSizeInMeters: CLLocationDistance {
-        print(coordinateConverter.unitSizeInMeters)
+        //print(coordinateConverter.unitSizeInMeters)
         return coordinateConverter.unitSizeInMeters
     }
 

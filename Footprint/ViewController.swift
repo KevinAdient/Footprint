@@ -130,9 +130,10 @@ class ViewController: UIViewController, MKMapViewDelegate {
             We setup a pair of anchors that will define how the floorplan image
             maps to geographic co-ordinates.
         */
-        let anchor1 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.771319,-86.071423), pdfPoint: CGPoint(x: 367, y: 469))
-
-        let anchor2 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.771192,-86.071312), pdfPoint: CGPoint(x: 323, y: 441))
+        //entrance next to cafe
+        let anchor1 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.771441,-86.070913), pdfPoint: CGPoint(x: 426, y: 381))
+        //desk
+        let anchor2 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.771226,-86.071357), pdfPoint: CGPoint(x: 396, y: 434))
 
         let anchorPair = GeoAnchorPair(fromAnchor: anchor1, toAnchor: anchor2)
 
@@ -142,7 +143,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
             Note that these coordinates are given in PDF coordinates, but they
             will show up on just fine on MapKit in MapKit coordinates.
         */
-        let pdfTriangleRegionToHighlight = [CGPoint(x: 300, y: 691), CGPoint(x: 260, y: 709), CGPoint(x: 260, y: 671)]
+        let pdfTriangleRegionToHighlight = [CGPoint(x: 269, y: 711), CGPoint(x: 249, y: 681), CGPoint(x: 289, y: 682)]
 
         // === Initialize our assets
 
