@@ -162,8 +162,10 @@ import MapKit
             Applying this heading to the MKMapCamera will cause PDF +x to face
             MapKit +x.
         */
-        let rotatePDFXToMapKitX = coordinateConverter.getUprightMKMapCameraHeading()
+        var rotatePDFXToMapKitX = coordinateConverter.getUprightMKMapCameraHeading()
 
+
+//        rotatePDFXToMapKitX = rotatePDFXToMapKitX * 2
         print("rotatePDFXToMapKitX: [\(rotatePDFXToMapKitX)]\n")
         /*
             If a PDF Page Dictionary contains the "Rotate" entry, it is a

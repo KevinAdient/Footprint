@@ -68,7 +68,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
         Set to true when we reveal the MapKit tileset (by pressing the trashcan
         button).
      */
-    var mapKitTilesetRevealed = false
+    var mapKitTilesetRevealed = true //false
 
     /// Call this to reset the camera.
     @IBAction func resetCamera(_ sender: AnyObject) {
@@ -131,12 +131,57 @@ class ViewController: UIViewController, MKMapViewDelegate {
             maps to geographic co-ordinates.
         */
         //entrance next to cafe
+    /* Holland
         let anchor1 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.771441,-86.070913), pdfPoint: CGPoint(x: 426, y: 381))
         //desk
         let anchor2 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.771226,-86.071357), pdfPoint: CGPoint(x: 396, y: 434))
 
         let anchorPair = GeoAnchorPair(fromAnchor: anchor1, toAnchor: anchor2)
+    */
+        //Southfield
+    /* test 2
+        let newX = 1215 - 1069
+        print("x = \(newX), y = 330")
+        let anchor2 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.4962,-83.2943), pdfPoint: CGPoint(x: newX, y: 330))
+        //desk
+        let newXX = 1215 - 124
+        print("x = \(newXX), y = 592")
+        let anchor1 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.4960798,-83.2935618), pdfPoint: CGPoint(x: newXX, y: 592))
+    */
+        
+    /*
+        let newX = 1215 - 1069
+        print("x = \(newX), y = 330")
+        let anchor2 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.4962,-83.2943), pdfPoint: CGPoint(x: 330, y: newX))
+        //desk
+        let newXX = 1215 - 124
+        print("x = \(newXX), y = 592")
+        let anchor1 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.4960798,-83.2935618), pdfPoint: CGPoint(x: 592, y: newXX))
 
+        let anchorPair = GeoAnchorPair(fromAnchor: anchor1, toAnchor: anchor2)
+     */
+    /* best so far */
+        let newX = /* 1215 -*/ 123
+        print("x = \(newX), y = 330")
+        let anchorA = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.4966,-83.2944), pdfPoint: CGPoint(x: newX, y: 591))
+        //desk
+        let newXX = /* 1215 -*/ 1064
+        print("x = \(newXX), y = 333")
+        let anchorB = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.4962,-83.2923), pdfPoint: CGPoint(x: newXX, y: 333))
+        
+        let anchorPair = GeoAnchorPair(fromAnchor: anchorA, toAnchor: anchorB)
+    /* */
+    /*
+        let newX = /* 1215 -*/ 1060
+        print("x = \(newX), y = 330")
+        let anchorA = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.4966,-83.2944), pdfPoint: CGPoint(x: newX, y: 265))
+        //desk
+        let newXX = /* 1215 -*/ 113
+        print("x = \(newXX), y = 333")
+        let anchorB = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.4962,-83.2923), pdfPoint: CGPoint(x: newXX, y: 376))
+        
+        let anchorPair = GeoAnchorPair(fromAnchor: anchorA, toAnchor: anchorB)
+    */
         /*
             Pick a triangle on your PDF that you would like to highlight in
             yellow. Feel free to try regions with more than three edges.
@@ -152,8 +197,11 @@ class ViewController: UIViewController, MKMapViewDelegate {
             reference during "Copy Bundle Resources" section under target
             settings build phases.
         */
+        
+        /* holland
         let pdfUrl = Bundle.main.url(forResource: "HTC_Conference_Room_Locations-not-flipped", withExtension: "pdf", subdirectory:"Floorplans")!
-
+        */
+        let pdfUrl = Bundle.main.url(forResource: "STC4thfloor-flipped", withExtension: "pdf", subdirectory:"Floorplans")!
         floorplan0 = FloorplanOverlay(floorplanUrl: pdfUrl, withPDFBox: CGPDFBox.trimBox, andAnchors: anchorPair, forFloorLevel: 0)
 
         visibleMapRegionDelegate = VisibleMapRegionDelegate(floorplanBounds: floorplan0.boundingMapRectIncludingRotations, boundingPDFBox: floorplan0.floorplanPDFBox,
@@ -192,9 +240,10 @@ class ViewController: UIViewController, MKMapViewDelegate {
             behavior, comment out the following line.
         */
         snapMapViewToFloorplan = true
+        
     }
 
-    /* override*/ func OrigViewDidLoad() {
+    /* overridefunc OrigViewDidLoad() {
         super.viewDidLoad()
         
         locationManager = CLLocationManager()
@@ -267,6 +316,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
          */
         snapMapViewToFloorplan = true
     }
+ */
 
     override func viewDidAppear(_ animated: Bool) {
         /*
@@ -276,7 +326,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
             than non-satellite view so you probably do not want to leave it this
             way in production.
         */
-        //mapView.mapType = MKMapTypeStandard
+        //mapView.mapType = MapKit.MKMapType.standard
     }
 
     /// Respond to CoreLocation updates
