@@ -160,7 +160,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
 
         let anchorPair = GeoAnchorPair(fromAnchor: anchor1, toAnchor: anchor2)
      */
-    /* best so far */
+    /* * best so far
         let newX = /* 1215 -*/ 123
         print("x = \(newX), y = 330")
         let anchorA = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.4966,-83.2944), pdfPoint: CGPoint(x: newX, y: 591))
@@ -170,18 +170,35 @@ class ViewController: UIViewController, MKMapViewDelegate {
         let anchorB = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.4962,-83.2923), pdfPoint: CGPoint(x: newXX, y: 333))
         
         let anchorPair = GeoAnchorPair(fromAnchor: anchorA, toAnchor: anchorB)
-    /* */
-    /*
-        let newX = /* 1215 -*/ 1060
-        print("x = \(newX), y = 330")
-        let anchorA = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.4966,-83.2944), pdfPoint: CGPoint(x: newX, y: 265))
+    * */
+
+/* was working */
+        let newX = 51
+        print("x = \(newX), y = 653")
+        let anchorA = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.3918,-83.4875), pdfPoint: CGPoint(x: newX, y: 653))
         //desk
-        let newXX = /* 1215 -*/ 113
-        print("x = \(newXX), y = 333")
-        let anchorB = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.4962,-83.2923), pdfPoint: CGPoint(x: newXX, y: 376))
+        let newXX = 1144
+        print("x = \(newXX), y = 84")
+        let anchorB = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.3933,-83.4888), pdfPoint: CGPoint(x: newXX, y: 84))
         
         let anchorPair = GeoAnchorPair(fromAnchor: anchorA, toAnchor: anchorB)
-    */
+/* */
+
+        /* 
+ top right corner is 0,0  but measurements taken bottom right corner is 0, 783
+ 
+ 
+
+        let newX = 653
+        print("x = \(newX), y = 51")
+        let anchorA = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.3918,-83.4875), pdfPoint: CGPoint(x: newX, y: 51))
+        //desk
+        let newXX = 84
+        print("x = \(newXX), y = 1144")
+        let anchorB = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(42.3933,-83.4888), pdfPoint: CGPoint(x: newXX, y: 1144))
+        
+        let anchorPair = GeoAnchorPair(fromAnchor: anchorA, toAnchor: anchorB)
+*/
         /*
             Pick a triangle on your PDF that you would like to highlight in
             yellow. Feel free to try regions with more than three edges.
@@ -201,8 +218,11 @@ class ViewController: UIViewController, MKMapViewDelegate {
         /* holland
         let pdfUrl = Bundle.main.url(forResource: "HTC_Conference_Room_Locations-not-flipped", withExtension: "pdf", subdirectory:"Floorplans")!
         */
+    /** best
         let pdfUrl = Bundle.main.url(forResource: "STC4thfloor-flipped", withExtension: "pdf", subdirectory:"Floorplans")!
-        floorplan0 = FloorplanOverlay(floorplanUrl: pdfUrl, withPDFBox: CGPDFBox.trimBox, andAnchors: anchorPair, forFloorLevel: 0)
+    **/
+        let pdfUrl = Bundle.main.url(forResource: "Helm_Conference_Room_Layouts_11_12_12", withExtension: "pdf", subdirectory:"Floorplans")!
+        floorplan0 = FloorplanOverlay(floorplanUrl: pdfUrl, withPDFBox: CGPDFBox.mediaBox/*trimBox*/, andAnchors: anchorPair, forFloorLevel: 0)
 
         visibleMapRegionDelegate = VisibleMapRegionDelegate(floorplanBounds: floorplan0.boundingMapRectIncludingRotations, boundingPDFBox: floorplan0.floorplanPDFBox,
                                                             floorplanCenter: floorplan0.coordinate,

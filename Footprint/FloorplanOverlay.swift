@@ -24,6 +24,8 @@ import MapKit
         screen inside an MKMapView.
     */
     var transformerFromPDFToMk = CGAffineTransform()
+        //.translatedBy(x: -1.0, y: -1.0)
+    //PETE var transformerFromPDFToMk = CGAffineTransform(scaleX: -1.0, y: -1.0)
 
     /// Current floor level
     var floorLevel = 0
@@ -163,20 +165,24 @@ import MapKit
             MapKit +x.
         */
         var rotatePDFXToMapKitX = coordinateConverter.getUprightMKMapCameraHeading()
+        //PETE
 
 
-//        rotatePDFXToMapKitX = rotatePDFXToMapKitX * 2
+        //rotatePDFXToMapKitX = rotatePDFXToMapKitX * 2
         print("rotatePDFXToMapKitX: [\(rotatePDFXToMapKitX)]\n")
+        
         /*
             If a PDF Page Dictionary contains the "Rotate" entry, it is a
             request to the reader to rotate the _printed_ page *clockwise* by
             the given number of degrees before reading it.
         */
-        let pdfPageDictionaryRotationEntryDegrees = pdfPage.rotationAngle
+        var pdfPageDictionaryRotationEntryDegrees = pdfPage.rotationAngle
+        //pete
         print("pdfPageDictionaryRotationEntryDegrees: [ \(pdfPageDictionaryRotationEntryDegrees)]\n")
-        
-        //print("overwriting the angle to be zero\n")
-        //pdfPageDictionaryRotationEntryDegrees = 0
+
+        //print("overwriting the angle to be 270\n")
+        //PETE
+        //pdfPageDictionaryRotationEntryDegrees =   pdfPageDictionaryRotationEntryDegrees
         /*
             In the MapView world that is equivalent to subtracting that amount
             from the MKMapCamera heading.

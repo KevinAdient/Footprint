@@ -240,7 +240,9 @@ class CoordinateConverter: NSObject {
             reference vectors before performing the  transform so far.
         */
         let resultOfDisplacementFromTangentPoint = CGAffineTransform(
-            a: oneMeterEastwardVector.dx, b: oneMeterEastwardVector.dy,
+            //here PETER
+            a: -1 * oneMeterEastwardVector.dx,
+            b: -1 * oneMeterEastwardVector.dy,
             c: oneMeterSouthwardVector.dx, d: oneMeterSouthwardVector.dy,
             tx: 0.0, ty: 0.0
             ).concatenating(resultOfDotProduct
@@ -316,7 +318,9 @@ class CoordinateConverter: NSObject {
             To make the floorplan upright, we want to rotate the floorplan +x
             vector toward due east.
         */
-        let resultRadians: CGFloat = atan2(oneMeterEastwardVector.dy, oneMeterEastwardVector.dx)
+        
+        //PETE HERE for rotation
+        let resultRadians: CGFloat = atan2(-1 * oneMeterEastwardVector.dy, -1 * oneMeterEastwardVector.dx)
         //let result = resultRadians * 180.0 / CGFloat(M_PI)
         let result = resultRadians * 180.0 / CGFloat.pi
 
