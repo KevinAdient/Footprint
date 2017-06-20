@@ -54,8 +54,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         mapview.delegate = self as! MKMapViewDelegate
         
-        let location = CLLocationCoordinate2D(latitude: 47.6062, longitude: -122.3320)
-        let span = MKCoordinateSpanMake(2.0, 2.0)
+        let location = CLLocationCoordinate2D(latitude: 42.3927, longitude: -83.4884)
+        let span = MKCoordinateSpanMake(0.0018, 0.0018)
         let region = MKCoordinateRegion(center: location, span: span)
         mapview.setRegion(region, animated: true)
         
@@ -63,17 +63,31 @@ class ViewController: UIViewController {
         let overlay = MapOverlay(coord: location, rect: rec)
         mapview.add(overlay)
     }
+    
     func drawPDFfromURL(url: URL) -> UIImage? {
         guard let document = CGPDFDocument(url as CFURL) else { return nil }
         guard let page = document.page(at: 1) else { return nil }
         
         let pageRect = page.getBoxRect(.mediaBox)
         let renderer = UIGraphicsImageRenderer(size: pageRect.size)
+        //renderer.fillColor = UIColor.white.withAlphaComponent(hideBackgroundOverlayAlpha)
+        
+        // No border.
+        //renderer.lineWidth = 0.0
+        //renderer.strokeColor = UIColor.white.withAlphaComponent(0.0)
+        
+        hideBackgroundOverlayAlpha = 0.5
         let img = renderer.image { ctx in
-            //UIColor.white.set()
+           // UIColor.white.set()
+            UIColor.white.withAlphaComponent(hideBackgroundOverlayAlpha).set()
+            ctx.cgContext.setFillColor(red: 255, green: 0, blue: 0, alpha: 0.6)
+            ctx.cgContext.setStrokeColor(cyan: 255, magenta: 255, yellow: 0.0, black: 0.0, alpha: 0.6)
+            ctx.cgContext.setBlendMode(CGBlendMode.screen)
             ctx.fill(pageRect)
-            
+            //ctx.strokeColor = UIColor.white.withAlphaComponent(0.0)
+            //ctx.cgContext.setAlpha(0.6)
             ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height);
+            //ctx.cgContext.scaleBy(x: 1.0, y: -1.0);
             ctx.cgContext.scaleBy(x: 1.0, y: -1.0);
             
             ctx.cgContext.drawPDFPage(page);
