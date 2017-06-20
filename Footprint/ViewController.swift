@@ -13,6 +13,7 @@
 
 import CoreLocation
 import Foundation
+import UIKit
 import MapKit
 
 /**
@@ -25,7 +26,82 @@ import MapKit
     We will also show how to highlight a region that you have defined in PDF
     coordinates but not Latitude & Longitude.
 */
-class ViewController: UIViewController, MKMapViewDelegate {
+class ViewController: UIViewController {
+    
+    @IBOutlet weak var mapview: MKMapView!
+    
+    @IBOutlet weak var debugVisualsSwitch: UISwitch!
+    
+    var locationManager: CLLocationManager!
+    
+    var hideBackgroundOverlayAlpha: CGFloat!
+    
+    var visibleMapRegionDelegate: VisibleMapRegionDelegate!
+    
+    var floorplan0: FloorplanOverlay!
+    
+    var debuggingOverlays: [MKOverlay]!
+    var debuggingAnnotations: [MKAnnotation]!
+    
+    var lastFloor: CLFloor!
+    
+    var snapMapViewToFloorplan: Bool! = false
+    
+    var mapKitTilesetRevealed = true //false
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        mapview.delegate = self as! MKMapViewDelegate
+        
+        let location = CLLocationCoordinate2D(latitude: 47.6062, longitude: -122.3320)
+        let span = MKCoordinateSpanMake(2.0, 2.0)
+        let region = MKCoordinateRegion(center: location, span: span)
+        mapview.setRegion(region, animated: true)
+        
+        let rec = mapview.visibleMapRect
+        let overlay = MapOverlay(coord: location, rect: rec)
+        mapview.add(overlay)
+    }
+    func drawPDFfromURL(url: URL) -> UIImage? {
+        guard let document = CGPDFDocument(url as CFURL) else { return nil }
+        guard let page = document.page(at: 1) else { return nil }
+        
+        let pageRect = page.getBoxRect(.mediaBox)
+        let renderer = UIGraphicsImageRenderer(size: pageRect.size)
+        let img = renderer.image { ctx in
+            //UIColor.white.set()
+            ctx.fill(pageRect)
+            
+            ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height);
+            ctx.cgContext.scaleBy(x: 1.0, y: -1.0);
+            
+            ctx.cgContext.drawPDFPage(page);
+        }
+        
+        return img
+    }
+    
+}
+
+extension ViewController: MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        
+        if overlay is MapOverlay {
+            let pdfUrl = Bundle.main.url(forResource: "Helm_Conference_Room_Layouts_11_12_12", withExtension: "pdf", subdirectory:"Floorplans")!
+            let logo = drawPDFfromURL(url:pdfUrl)
+
+            //let logo = UIImage(named: "swift")
+            let overlayView = MapOverlayView(overlay: overlay, overlayImage: logo!)
+            return overlayView
+        } else {
+            return MKPolylineRenderer()
+        }
+    }
+}
+
+class ViewControllerOrig: UIViewController, MKMapViewDelegate {
 
     /// Outlet for the map view in the storyboard.
     @IBOutlet weak var mapView: MKMapView!
@@ -62,7 +138,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
         Set to false if you want to turn off auto-scroll & auto-zoom that snaps
         to the floorplan in case you scroll or zoom too far away.
     */
-    var snapMapViewToFloorplan: Bool!
+    var snapMapViewToFloorplan: Bool! = false
 
     /**
         Set to true when we reveal the MapKit tileset (by pressing the trashcan
@@ -222,9 +298,15 @@ class ViewController: UIViewController, MKMapViewDelegate {
         let pdfUrl = Bundle.main.url(forResource: "STC4thfloor-flipped", withExtension: "pdf", subdirectory:"Floorplans")!
     **/
         let pdfUrl = Bundle.main.url(forResource: "Helm_Conference_Room_Layouts_11_12_12", withExtension: "pdf", subdirectory:"Floorplans")!
+        let myUIImage = drawPDFfromURL(url:pdfUrl)
+/*
+        let myMKOverlay : MKOverlay = MKOverlay(UIImage:myUIImage)
+        mapView.addOverlays([MKOverlay])
+ */
+        //mapView.add
         
-        
-        
+/* commenting out a bunch of stuff
+ 
         floorplan0 = FloorplanOverlay(floorplanUrl: pdfUrl, withPDFBox: CGPDFBox.mediaBox/*trimBox*/, andAnchors: anchorPair, forFloorLevel: 0)
 
         visibleMapRegionDelegate = VisibleMapRegionDelegate(floorplanBounds: floorplan0.boundingMapRectIncludingRotations, boundingPDFBox: floorplan0.floorplanPDFBox,
@@ -237,35 +319,56 @@ class ViewController: UIViewController, MKMapViewDelegate {
         // Disable tileset.
         mapView.add(HideBackgroundOverlay.hideBackgroundOverlay(), level: .aboveRoads)
 
-        /*
+        //
             The following are provided for debugging.
             In production, you'll want to comment this out.
-        */
+        //
         debuggingOverlays = ViewController.createDebuggingOverlaysForMapView(mapView!, aboutFloorplan: floorplan0)
         debuggingAnnotations = ViewController.createDebuggingAnnotationsForMapView(mapView!, aboutFloorplan: floorplan0)
 
         // Draw the floorplan!
         mapView.add(floorplan0)
 
-        /*
+        //
             Highlight our region (originally specified in PDF coordinates) in
             yellow!
-        */
+        //
         let customHighlightRegion = floorplan0.polygonFromCustomPDFPath(pdfTriangleRegionToHighlight)
         customHighlightRegion.title = "Hello World"
         customHighlightRegion.subtitle = "This custom region will be highlighted in Yellow!"
         mapView!.add(customHighlightRegion)
 
-        /*
+        //
             By default, we listen to the scroll & zoom events to make sure that
             if the user scrolls/zooms too far away from the floorplan, we
             automatically bounce back. If you would like to disable this
             behavior, comment out the following line.
-        */
+        //
         snapMapViewToFloorplan = true
+ */
         
     }
-
+    
+    func drawPDFfromURL(url: URL) -> UIImage? {
+        guard let document = CGPDFDocument(url as CFURL) else { return nil }
+        guard let page = document.page(at: 1) else { return nil }
+        
+        let pageRect = page.getBoxRect(.mediaBox)
+        let renderer = UIGraphicsImageRenderer(size: pageRect.size)
+        let img = renderer.image { ctx in
+            //UIColor.white.set()
+            ctx.fill(pageRect)
+            
+            ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height);
+            ctx.cgContext.scaleBy(x: 1.0, y: -1.0);
+            
+            ctx.cgContext.drawPDFPage(page);
+        }
+        
+        return img
+    }
+    
+    
     /* overridefunc OrigViewDidLoad() {
         super.viewDidLoad()
         

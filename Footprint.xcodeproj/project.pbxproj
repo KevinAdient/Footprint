@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		475468781EF9B5960022B51E /* MapOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475468771EF9B5960022B51E /* MapOverlay.swift */; };
+		4754687A1EF9B5D80022B51E /* MapOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475468791EF9B5D80022B51E /* MapOverlayView.swift */; };
 		A641A13F1B586C6A00B1035B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A641A13E1B586C6A00B1035B /* AppDelegate.swift */; };
 		A641A1411B586C6A00B1035B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A641A1401B586C6A00B1035B /* ViewController.swift */; };
 		A641A1441B586C6A00B1035B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A641A1421B586C6A00B1035B /* Main.storyboard */; };
@@ -21,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		475468771EF9B5960022B51E /* MapOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapOverlay.swift; sourceTree = "<group>"; };
+		475468791EF9B5D80022B51E /* MapOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapOverlayView.swift; sourceTree = "<group>"; };
 		A641A13E1B586C6A00B1035B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A641A1401B586C6A00B1035B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A641A1431B586C6A00B1035B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -67,6 +71,8 @@
 				A641A1781B586F5900B1035B /* HideBackgroundOverlay.swift */,
 				A641A1701B586EDF00B1035B /* MKMapRectRotated.swift */,
 				A641A1401B586C6A00B1035B /* ViewController.swift */,
+				475468771EF9B5960022B51E /* MapOverlay.swift */,
+				475468791EF9B5D80022B51E /* MapOverlayView.swift */,
 				A641A1761B586F4400B1035B /* VisibleMapRegionDelegate.swift */,
 				A641A16C1B586EA000B1035B /* Utilities.swift */,
 				A641A1421B586C6A00B1035B /* Main.storyboard */,
@@ -152,8 +158,10 @@
 				A641A16D1B586EA000B1035B /* Utilities.swift in Sources */,
 				A641A1711B586EDF00B1035B /* MKMapRectRotated.swift in Sources */,
 				A641A1771B586F4400B1035B /* VisibleMapRegionDelegate.swift in Sources */,
+				4754687A1EF9B5D80022B51E /* MapOverlayView.swift in Sources */,
 				A641A1411B586C6A00B1035B /* ViewController.swift in Sources */,
 				A641A1731B586EF200B1035B /* FloorplanOverlay.swift in Sources */,
+				475468781EF9B5960022B51E /* MapOverlay.swift in Sources */,
 				A641A1791B586F5900B1035B /* HideBackgroundOverlay.swift in Sources */,
 				A641A13F1B586C6A00B1035B /* AppDelegate.swift in Sources */,
 			);
