@@ -222,6 +222,9 @@ class ViewController: UIViewController, MKMapViewDelegate {
         let pdfUrl = Bundle.main.url(forResource: "STC4thfloor-flipped", withExtension: "pdf", subdirectory:"Floorplans")!
     **/
         let pdfUrl = Bundle.main.url(forResource: "Helm_Conference_Room_Layouts_11_12_12", withExtension: "pdf", subdirectory:"Floorplans")!
+        
+        
+        
         floorplan0 = FloorplanOverlay(floorplanUrl: pdfUrl, withPDFBox: CGPDFBox.mediaBox/*trimBox*/, andAnchors: anchorPair, forFloorLevel: 0)
 
         visibleMapRegionDelegate = VisibleMapRegionDelegate(floorplanBounds: floorplan0.boundingMapRectIncludingRotations, boundingPDFBox: floorplan0.floorplanPDFBox,
